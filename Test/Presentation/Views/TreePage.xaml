@@ -6,28 +6,52 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     xmlns:vm="using:Presentation.ViewModels"
-    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    xmlns:models="using:Presentation.Models"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls" 
+    xmlns:templates="using:Presentation.Templates"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.DataContext>
         <vm:TreePageViewModel />
     </Page.DataContext>
 
+    <Page.Resources>
+        <DataTemplate 
+            x:DataType="templates:ItemTemplateSelector"
+            x:Key="FolderTemplate">
+            <muxc:TreeViewItem 
+                ItemsSource="{Binding Children}" 
+                IsExpanded="{Binding IsExpanded}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Width="20" Source="../Assets/folder.png"/>
+                    <TextBlock Margin="0,0,10,0"/>
+                    <TextBlock Text="{Binding Name}" />
+                </StackPanel>
+            </muxc:TreeViewItem>
+        </DataTemplate>
+
+        <DataTemplate 
+            x:DataType="templates:ItemTemplateSelector"         
+            x:Key="FileTemplate">
+            <muxc:TreeViewItem >
+
+                <StackPanel Orientation="Horizontal">
+                    <Image Width="20" Source="../Assets/file.png"/>
+                    <TextBlock Margin="0,0,10,0"/>
+                    <TextBlock Text="{Binding Name}"/>
+                </StackPanel>
+            </muxc:TreeViewItem>
+        </DataTemplate>
+
+        <templates:ItemTemplateSelector 
+            x:Key="ItemTemplateSelector"
+            FolderTemplate="{StaticResource FolderTemplate}"
+            FileTemplate="{StaticResource FileTemplate}" />
+    </Page.Resources>
+
     <Grid>
         <muxc:TreeView
-            ItemsSource="{Binding Items, Mode=OneWay}">
-            <muxc:TreeView.ItemTemplate>
-                <DataTemplate>
-                    <muxc:TreeViewItem ItemsSource="{Binding Children}">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Width="20" Source="{Binding Icon}"/>
-                            <TextBlock Text="{Binding Name}" />
-                        </StackPanel>
-                    </muxc:TreeViewItem>
-                </DataTemplate>
-            </muxc:TreeView.ItemTemplate>
+            ItemsSource="{Binding Items}"
+            ItemTemplateSelector="{StaticResource ItemTemplateSelector}">
         </muxc:TreeView>
-
     </Grid>
 </Page>
