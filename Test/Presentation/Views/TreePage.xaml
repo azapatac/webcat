@@ -6,14 +6,28 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     xmlns:vm="using:Presentation.ViewModels"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:models="using:Presentation.Models"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.DataContext>
         <vm:TreePageViewModel />
     </Page.DataContext>
-    
+
     <Grid>
-        <TextBlock 
-            Text="Hello"/>
+        <muxc:TreeView
+            ItemsSource="{Binding Items, Mode=OneWay}">
+            <muxc:TreeView.ItemTemplate>
+                <DataTemplate>
+                    <muxc:TreeViewItem ItemsSource="{Binding Children}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Width="20" Source="{Binding Icon}"/>
+                            <TextBlock Text="{Binding Name}" />
+                        </StackPanel>
+                    </muxc:TreeViewItem>
+                </DataTemplate>
+            </muxc:TreeView.ItemTemplate>
+        </muxc:TreeView>
+
     </Grid>
 </Page>
