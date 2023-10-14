@@ -33,7 +33,6 @@
             x:DataType="templates:ItemTemplateSelector"         
             x:Key="FileTemplate">
             <muxc:TreeViewItem >
-
                 <StackPanel Orientation="Horizontal">
                     <Image Width="20" Source="../Assets/file.png"/>
                     <TextBlock Margin="0,0,10,0"/>
