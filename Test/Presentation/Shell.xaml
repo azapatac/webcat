@@ -1,0 +1,68 @@
+﻿<UserControl
+    x:Class="Presentation.Shell"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    d:DesignHeight="800"
+    d:DesignWidth="1200"
+    muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
+    Loaded="Shell_OnLoaded"
+    mc:Ignorable="d">
+
+    <Grid>
+        <muxc:NavigationView
+            x:Name="NavigationView"
+            BackRequested="NavigationView_OnBackRequested"
+            IsBackEnabled="False"
+            IsSettingsVisible="False"
+            IsTitleBarAutoPaddingEnabled="False"
+            ItemInvoked="NavigationView_OnItemInvoked">
+            <muxc:NavigationView.Resources>
+                <Thickness x:Key="NavigationViewContentMargin">0,32,0,0</Thickness>
+                <SolidColorBrush x:Key="NavigationViewContentBackground" Color="Transparent" />
+                <SolidColorBrush x:Key="NavigationViewContentGridBorderBrush" Color="Transparent" />
+            </muxc:NavigationView.Resources>
+
+            <muxc:NavigationView.MenuItems>
+                <muxc:NavigationViewItem
+                    x:Name="TreeItem"
+                    Content="Tree"
+                    Icon="ViewAll"
+                    ToolTipService.ToolTip="Implemented TreeView" />
+
+                <muxc:NavigationViewItem
+                    x:Name="CanvasItem"
+                    Content="Canva"
+                    Icon="Play"
+                    ToolTipService.ToolTip="Implemented Canvas" />
+            </muxc:NavigationView.MenuItems>
+            
+            <muxc:NavigationView.Content>
+                <Frame x:Name="NavigationFrame" Navigated="NavigationFrame_OnNavigated" />
+            </muxc:NavigationView.Content>
+
+        </muxc:NavigationView>
+
+        <Border
+            x:Name="TitleBarBorder"
+            Height="40"
+            Margin="40,0,0,0"
+            Padding="8,0,0,0"
+            VerticalAlignment="Top"
+            Background="Transparent">
+            <StackPanel
+                Grid.ColumnSpan="2"
+                Margin="0,15,8,8"
+                VerticalAlignment="Center"
+                Orientation="Horizontal">
+                <Image Width="16" Source="ms-appx:///Assets/Icon/AppIcon.png" />
+
+                <TextBlock
+                    Margin="12,0,0,0" 
+                    Text="UWP Test Andres Zapata" />
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>
