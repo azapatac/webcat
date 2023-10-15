@@ -34,7 +34,7 @@
 
                 <muxc:NavigationViewItem
                     x:Name="CanvasItem"
-                    Content="Canva"
+                    Content="Canvas"
                     Icon="Play"
                     ToolTipService.ToolTip="Implemented Canvas" />
             </muxc:NavigationView.MenuItems>

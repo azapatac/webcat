@@ -5,14 +5,20 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+
     xmlns:vm="using:Presentation.ViewModels"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.DataContext>
-    <vm:CanvasPageViewModel />
+        <vm:CanvasPageViewModel />
     </Page.DataContext>
-    
-    <Grid>
 
+    <Grid>
+        <Canvas
+            x:Name="MyCanvas" 
+            Background="White"
+            PointerMoved="Canvas_PointerMoved" 
+            PointerPressed="Canvas_PointerPressed" 
+            PointerReleased="Canvas_PointerReleased" />
     </Grid>
 </Page>
