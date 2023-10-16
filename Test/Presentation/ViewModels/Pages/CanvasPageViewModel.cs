@@ -1,5 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using PropertyChanged;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
 using Windows.Devices.Input;
 using Windows.Foundation;
 using Windows.UI.Xaml.Controls;
@@ -11,17 +14,34 @@ namespace Presentation.ViewModels
 {
     public partial class CanvasPageViewModel : ObservableObject
     {
+        public ICollection<Line> Lines { get; } = new ObservableCollection<Line>();
+        [DoNotNotify]
+        public Canvas MyCanvas { get; set; }
+        [DoNotNotify]
         private Point? previousPoint;
+        [DoNotNotify]
         private List<Point> currentLinePoints;
-        private Line currentLine;
+        [DoNotNotify]
+        private Line currentLine { get; set; }
+
+        public ICommand PointerMovedCommand { get; set; }
+        public ICommand PointerPressedCommand { get; set; }
+        public ICommand PointerReleasedCommand { get; set; }
 
         public CanvasPageViewModel()
         {
+            MyCanvas = new Canvas();
             currentLinePoints = new List<Point>();
+            PointerMovedCommand = new RelayCommand(PointerMoved);
+            PointerPressedCommand = new RelayCommand(PointerPressed);
+            PointerReleasedCommand = new RelayCommand(PointerReleased);
         }
-        public void PointerPressed(object sender, PointerRoutedEventArgs e)
+
+        private void PointerPressed(object sender)
         {
-            if (e.Pointer.PointerDeviceType == PointerDeviceType.Mouse || e.Pointer.PointerDeviceType == PointerDeviceType.Pen)
+            var e = (PointerRoutedEventArgs)sender;
+
+            if (e!= null && e.Pointer.PointerDeviceType == PointerDeviceType.Mouse || e.Pointer.PointerDeviceType == PointerDeviceType.Pen)
             {
                 currentLine = new Line
                 {
@@ -29,18 +49,20 @@ namespace Presentation.ViewModels
                     StrokeThickness = 2
                 };
 
-                ((Canvas)sender).Children.Add(currentLine);
+                Lines.Add(currentLine);
                 currentLinePoints.Clear();
-                previousPoint = e.GetCurrentPoint((Canvas)sender).Position;
+                previousPoint = e.GetCurrentPoint(MyCanvas).Position;
                 currentLinePoints.Add(previousPoint.Value);
             }
         }
 
-        public void PointerMoved(object sender, PointerRoutedEventArgs e)
+        public void PointerMoved(object sender)
         {
-            if (currentLine != null)
+            var e = (PointerRoutedEventArgs)sender;
+
+            if (currentLine != null && e != null)
             {
-                Point currentPoint = e.GetCurrentPoint((Canvas)sender).Position;
+                Point currentPoint = e.GetCurrentPoint(MyCanvas).Position;
                 currentLinePoints.Add(currentPoint);
 
                 if (currentLinePoints.Count < 2)
@@ -59,12 +81,12 @@ namespace Presentation.ViewModels
                         X2 = p2.X,
                         Y2 = p2.Y
                     };
-                    ((Canvas)sender).Children.Add(curveSegment);
+                    Lines.Add(curveSegment);
                 }
             }
         }
 
-        public void PointerReleased(object sender, PointerRoutedEventArgs e)
+        public void PointerReleased(object sender)
         {
             previousPoint = null;
             currentLine = null;

@@ -13,19 +13,9 @@ namespace Presentation.Views
             context = DataContext as CanvasPageViewModel;
         }
 
-        private void Canvas_PointerPressed(object sender, PointerRoutedEventArgs e)
+        private void MyCanvas_PointerMoved(object sender, PointerRoutedEventArgs e)
         {
-            context.PointerPressed(sender, e);
-        }
-
-        private void Canvas_PointerMoved(object sender, PointerRoutedEventArgs e)
-        {
-            context.PointerMoved(sender, e);  
-        }
-
-        private void Canvas_PointerReleased(object sender, PointerRoutedEventArgs e)
-        {
-            context.PointerReleased(sender, e);
+            context.PointerMoved(e);
         }
     }
 }
