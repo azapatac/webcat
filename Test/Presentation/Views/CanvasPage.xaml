@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-
+    
     xmlns:vm="using:Presentation.ViewModels"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -19,6 +19,8 @@
             Background="White"
             PointerMoved="Canvas_PointerMoved" 
             PointerPressed="Canvas_PointerPressed" 
-            PointerReleased="Canvas_PointerReleased" />
+            PointerReleased="Canvas_PointerReleased" 
+            
+            />
     </Grid>
 </Page>

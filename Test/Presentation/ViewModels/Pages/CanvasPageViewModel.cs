@@ -19,7 +19,7 @@ namespace Presentation.ViewModels
         {
             currentLinePoints = new List<Point>();
         }
-        public void Canvas_PointerPressed(object sender, PointerRoutedEventArgs e)
+        public void PointerPressed(object sender, PointerRoutedEventArgs e)
         {
             if (e.Pointer.PointerDeviceType == PointerDeviceType.Mouse || e.Pointer.PointerDeviceType == PointerDeviceType.Pen)
             {
@@ -36,7 +36,7 @@ namespace Presentation.ViewModels
             }
         }
 
-        public void Canvas_PointerMoved(object sender, PointerRoutedEventArgs e)
+        public void PointerMoved(object sender, PointerRoutedEventArgs e)
         {
             if (currentLine != null)
             {
@@ -64,7 +64,7 @@ namespace Presentation.ViewModels
             }
         }
 
-        public void Canvas_PointerReleased(object sender, PointerRoutedEventArgs e)
+        public void PointerReleased(object sender, PointerRoutedEventArgs e)
         {
             previousPoint = null;
             currentLine = null;
