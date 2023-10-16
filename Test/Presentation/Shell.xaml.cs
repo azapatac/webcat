@@ -1,7 +1,5 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
+﻿using Presentation.Models.Navigation;
+using Presentation.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,17 +7,14 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using NavigationView = Microsoft.UI.Xaml.Controls.NavigationView;
-using NavigationViewItem = Microsoft.UI.Xaml.Controls.NavigationViewItem;
 using NavigationViewBackRequestedEventArgs = Microsoft.UI.Xaml.Controls.NavigationViewBackRequestedEventArgs;
 using NavigationViewItemInvokedEventArgs = Microsoft.UI.Xaml.Controls.NavigationViewItemInvokedEventArgs;
-using Presentation.Views;
 
 namespace Presentation
 {
-
     public sealed partial class Shell : UserControl
     {
-        private readonly IReadOnlyCollection<SampleEntry> NavigationItems;
+        private readonly IReadOnlyCollection<NavigationItem> NavigationItems;
 
         public Shell()
         {
@@ -27,8 +22,8 @@ namespace Presentation
 
             NavigationItems = new[]
             {
-                new SampleEntry(TreeItem, typeof(TreePage)),
-                new SampleEntry(CanvasItem, typeof(CanvasPage)),
+                new NavigationItem(TreeItem, typeof(TreePage)),
+                new NavigationItem(CanvasItem, typeof(CanvasPage)),
             };
 
             // Set the custom title bar to act as a draggable region
@@ -56,7 +51,6 @@ namespace Presentation
             if (NavigationFrame.BackStack.LastOrDefault() is PageStackEntry entry)
             {
                 NavigationView.SelectedItem = NavigationItems.First(item => item.PageType == entry.SourcePageType).Item;
-
                 NavigationFrame.GoBack();
             }
         }
@@ -67,39 +61,5 @@ namespace Presentation
             NavigationView.SelectedItem = TreeItem;
             NavigationFrame.Navigate(typeof(TreePage));
         }
-    }
-
-    /// <summary>
-    /// A simple model for tracking sample pages associated with buttons.
-    /// </summary>
-    public sealed class SampleEntry
-    {
-        public SampleEntry(NavigationViewItem viewItem, Type pageType, string name = null, string tags = null)
-        {
-            Item = viewItem;
-            PageType = pageType;
-            Name = name;
-            Tags = tags;
-        }
-
-        /// <summary>
-        /// The navigation item for the current entry.
-        /// </summary>
-        public NavigationViewItem Item { get; }
-
-        /// <summary>
-        /// The associated page type for the current entry.
-        /// </summary>
-        public Type PageType { get; }
-
-        /// <summary>
-        /// Gets the name of the current entry.
-        /// </summary>
-        public string Name { get; }
-
-        /// <summary>
-        /// Gets the tag for the current entry, if any.
-        /// </summary>
-        public string Tags { get; }
     }
 }
